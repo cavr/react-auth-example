@@ -8,9 +8,9 @@ class PrivateSection extends Component {
     return (
       <div style={{padding:'64px'}}>
         <h3 style={{ color: "green" }}>Private</h3>
-        <json style={{ width: "100px" }}>
+        <p style={{ width: "100%", overflow: "scroll" }}>
           {JSON.stringify(this.props.user)}
-        </json>
+        </p>
         <div style={{marginTop: '32px'}}>
           <Link onClick={() => this.props.logOut()} to="/auth">
             LOGOUT
