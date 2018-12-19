@@ -6,10 +6,9 @@ class PrivateRoute extends Component {
   render() {
     const { user } = this.props;
     const { component: Component, ...rest } = this.props;
-    return (
-      <Route
-        {...rest}
-        render={props =>
+    const render = this.props.render
+      ? this.props.render
+      : props =>
           user ? (
             <Component {...props} />
           ) : (
@@ -19,10 +18,8 @@ class PrivateRoute extends Component {
                 state: { from: props.location }
               }}
             />
-          )
-        }
-      />
-    );
+          );
+    return <Route {...rest} render={render} />;
   }
 }
 
