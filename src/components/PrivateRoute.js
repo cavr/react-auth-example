@@ -3,23 +3,21 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 class PrivateRoute extends Component {
+  giveMeRender = () => {
+    const { component: Component, render } = this.props;
+    return render ? render : props => <Component {...props} />;
+  };
+
   render() {
-    const { user } = this.props;
-    const { component: Component, ...rest } = this.props;
-    const render = this.props.render
-      ? this.props.render
-      : props =>
-          user ? (
-            <Component {...props} />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/auth",
-                state: { from: props.location }
-              }}
-            />
-          );
-    return <Route {...rest} render={render} />;
+    const { user, ...rest } = this.props;
+
+    const render = user ? (
+      <Route {...rest} render={this.giveMeRender()} />
+    ) : (
+      <Redirect to="/auth" />
+    );
+
+    return render;
   }
 }
 
